@@ -1,2 +1,1 @@
-# Drug-Store-API
-Drug Store
+# Drug Store API
