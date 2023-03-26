@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DrugStore.API.Entities
 {
     [Index(nameof(Name))]
-    public class Categories
+    public class Insurance
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,7 +20,7 @@ namespace DrugStore.API.Entities
         [MaxLength(500)]
         public string? Description { get; private set; }
 
-        public Categories(int id, string name, string description)
+        public Insurance(int id, string name, string description)
         {
             Id = id;
             Name = name;

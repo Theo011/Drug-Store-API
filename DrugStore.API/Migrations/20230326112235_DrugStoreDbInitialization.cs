@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DrugStore.API.Migrations
 {
-    public partial class DataBaseCreation : Migration
+    public partial class DrugStoreDbInitialization : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "Category",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -20,11 +20,11 @@ namespace DrugStore.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_Category", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Insurances",
+                name: "Insurance",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -34,11 +34,11 @@ namespace DrugStore.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Insurances", x => x.Id);
+                    table.PrimaryKey("PK_Insurance", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Suppliers",
+                name: "Supplier",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -47,17 +47,17 @@ namespace DrugStore.API.Migrations
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ZipCode = table.Column<int>(type: "int", nullable: false),
-                    EIN = table.Column<int>(type: "int", nullable: false),
+                    ZipCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    Ein = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Suppliers", x => x.Id);
+                    table.PrimaryKey("PK_Supplier", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Product",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -70,17 +70,17 @@ namespace DrugStore.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CategoriesId",
+                        name: "FK_Product_Category_CategoriesId",
                         column: x => x.CategoriesId,
-                        principalTable: "Categories",
+                        principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customers",
+                name: "Customer",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -89,24 +89,24 @@ namespace DrugStore.API.Migrations
                     Address = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    ZipCode = table.Column<int>(type: "int", nullable: false),
-                    SSN = table.Column<int>(type: "int", nullable: false),
+                    ZipCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    Ssn = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     InsurancesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.PrimaryKey("PK_Customer", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customers_Insurances_InsurancesId",
+                        name: "FK_Customer_Insurance_InsurancesId",
                         column: x => x.InsurancesId,
-                        principalTable: "Insurances",
+                        principalTable: "Insurance",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Invoices",
+                name: "Invoice",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -117,17 +117,17 @@ namespace DrugStore.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invoices", x => x.Id);
+                    table.PrimaryKey("PK_Invoice", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Invoices_Suppliers_SuppliersId",
+                        name: "FK_Invoice_Supplier_SuppliersId",
                         column: x => x.SuppliersId,
-                        principalTable: "Suppliers",
+                        principalTable: "Supplier",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Receipts",
+                name: "Receipt",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -138,214 +138,216 @@ namespace DrugStore.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Receipts", x => x.Id);
+                    table.PrimaryKey("PK_Receipt", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Receipts_Customers_CustomersId",
+                        name: "FK_Receipt_Customer_CustomersId",
                         column: x => x.CustomersId,
-                        principalTable: "Customers",
+                        principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductsInvoice",
+                name: "ProductInvoice",
                 columns: table => new
                 {
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     InvoicesId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false)
+                    ProductsId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_ProductInvoice", x => new { x.InvoicesId, x.ProductsId });
                     table.ForeignKey(
-                        name: "FK_ProductsInvoice_Invoices_InvoicesId",
+                        name: "FK_ProductInvoice_Invoice_InvoicesId",
                         column: x => x.InvoicesId,
-                        principalTable: "Invoices",
+                        principalTable: "Invoice",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductsInvoice_Products_ProductsId",
+                        name: "FK_ProductInvoice_Product_ProductsId",
                         column: x => x.ProductsId,
-                        principalTable: "Products",
+                        principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductsReceipt",
+                name: "ProductReceipt",
                 columns: table => new
                 {
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     ReceiptsId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false)
+                    ProductsId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_ProductReceipt", x => new { x.ReceiptsId, x.ProductsId });
                     table.ForeignKey(
-                        name: "FK_ProductsReceipt_Invoices_ReceiptsId",
-                        column: x => x.ReceiptsId,
-                        principalTable: "Invoices",
+                        name: "FK_ProductReceipt_Product_ProductsId",
+                        column: x => x.ProductsId,
+                        principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductsReceipt_Products_ProductsId",
-                        column: x => x.ProductsId,
-                        principalTable: "Products",
+                        name: "FK_ProductReceipt_Receipt_ReceiptsId",
+                        column: x => x.ReceiptsId,
+                        principalTable: "Receipt",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Categories",
+                table: "Category",
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[] { 1, "Placeholder Category Description", "Placeholder Category Name" });
 
             migrationBuilder.InsertData(
-                table: "Insurances",
+                table: "Insurance",
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[] { 1, "Placeholder Insurance Description", "Placeholder Insurance Name" });
 
             migrationBuilder.InsertData(
-                table: "Suppliers",
-                columns: new[] { "Id", "Address", "Description", "EIN", "Email", "Name", "Phone", "ZipCode" },
-                values: new object[] { 1, "Placeholder Supplier Address", "Placeholder Supplier Description", 0, "PlaceholderSupplier@Email.com", "Placeholder Supplier Name", "0000000000", 0 });
+                table: "Supplier",
+                columns: new[] { "Id", "Address", "Description", "Ein", "Email", "Name", "Phone", "ZipCode" },
+                values: new object[] { 1, "Placeholder Supplier Address", "Placeholder Supplier Description", "000000000", "PlaceholderSupplier@Email.com", "Placeholder Supplier Name", "0000000000", "00000" });
 
             migrationBuilder.InsertData(
-                table: "Customers",
-                columns: new[] { "Id", "Address", "Description", "Email", "InsurancesId", "Name", "Phone", "SSN", "ZipCode" },
-                values: new object[] { 1, "Placeholder Customer Address", "Placeholder Customer Description", "PlaceholderCustomer@Email.com", 1, "Placeholder Customer Name", "0000000000", 0, 0 });
+                table: "Customer",
+                columns: new[] { "Id", "Address", "Description", "Email", "InsurancesId", "Name", "Phone", "Ssn", "ZipCode" },
+                values: new object[] { 1, "Placeholder Customer Address", "Placeholder Customer Description", "PlaceholderCustomer@Email.com", 1, "Placeholder Customer Name", "0000000000", "000000000", "00000" });
 
             migrationBuilder.InsertData(
-                table: "Invoices",
+                table: "Invoice",
                 columns: new[] { "Id", "Date", "Description", "SuppliersId" },
-                values: new object[] { 1, new DateTime(2023, 3, 26, 0, 24, 26, 167, DateTimeKind.Local).AddTicks(716), "Placeholder Invoices Description", 1 });
+                values: new object[] { 1, new DateTime(2023, 3, 26, 14, 22, 34, 585, DateTimeKind.Local).AddTicks(4023), "Placeholder Invoice Description", 1 });
 
             migrationBuilder.InsertData(
-                table: "Products",
+                table: "Product",
                 columns: new[] { "Id", "CategoriesId", "Description", "Name", "PurchasePrice", "SalePrice" },
                 values: new object[] { 1, 1, "Placeholder Product Description", "Placeholder Product Name", 10m, 20m });
 
             migrationBuilder.InsertData(
-                table: "Receipts",
+                table: "ProductInvoice",
+                columns: new[] { "InvoicesId", "ProductsId", "Description", "Quantity" },
+                values: new object[] { 1, 1, "Placeholder ProductInvoice Description", 100 });
+
+            migrationBuilder.InsertData(
+                table: "Receipt",
                 columns: new[] { "Id", "CustomersId", "Date", "Description" },
-                values: new object[] { 1, 1, new DateTime(2023, 3, 26, 0, 24, 26, 167, DateTimeKind.Local).AddTicks(776), "Placeholder Invoices Description" });
+                values: new object[] { 1, 1, new DateTime(2023, 3, 26, 14, 22, 34, 585, DateTimeKind.Local).AddTicks(4131), "Placeholder Receipt Description" });
+
+            migrationBuilder.InsertData(
+                table: "ProductReceipt",
+                columns: new[] { "ProductsId", "ReceiptsId", "Description", "Quantity" },
+                values: new object[] { 1, 1, "Placeholder ProductReceipt Description", 100 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_Name",
-                table: "Categories",
+                name: "IX_Category_Name",
+                table: "Category",
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_InsurancesId",
-                table: "Customers",
+                name: "IX_Customer_InsurancesId",
+                table: "Customer",
                 column: "InsurancesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_Name_SSN",
-                table: "Customers",
-                columns: new[] { "Name", "SSN" });
+                name: "IX_Customer_Name_Ssn",
+                table: "Customer",
+                columns: new[] { "Name", "Ssn" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Insurances_Name",
-                table: "Insurances",
+                name: "IX_Insurance_Name",
+                table: "Insurance",
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invoices_Date",
-                table: "Invoices",
+                name: "IX_Invoice_Date",
+                table: "Invoice",
                 column: "Date");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invoices_SuppliersId",
-                table: "Invoices",
+                name: "IX_Invoice_SuppliersId",
+                table: "Invoice",
                 column: "SuppliersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_CategoriesId",
-                table: "Products",
+                name: "IX_Product_CategoriesId",
+                table: "Product",
                 column: "CategoriesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_Name",
-                table: "Products",
+                name: "IX_Product_Name",
+                table: "Product",
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductsInvoice_InvoicesId",
-                table: "ProductsInvoice",
-                column: "InvoicesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductsInvoice_ProductsId",
-                table: "ProductsInvoice",
+                name: "IX_ProductInvoice_ProductsId",
+                table: "ProductInvoice",
                 column: "ProductsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductsInvoice_Quantity",
-                table: "ProductsInvoice",
+                name: "IX_ProductInvoice_Quantity",
+                table: "ProductInvoice",
                 column: "Quantity");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductsReceipt_ProductsId",
-                table: "ProductsReceipt",
+                name: "IX_ProductReceipt_ProductsId",
+                table: "ProductReceipt",
                 column: "ProductsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductsReceipt_Quantity",
-                table: "ProductsReceipt",
+                name: "IX_ProductReceipt_Quantity",
+                table: "ProductReceipt",
                 column: "Quantity");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductsReceipt_ReceiptsId",
-                table: "ProductsReceipt",
-                column: "ReceiptsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Receipts_CustomersId",
-                table: "Receipts",
+                name: "IX_Receipt_CustomersId",
+                table: "Receipt",
                 column: "CustomersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Receipts_Date",
-                table: "Receipts",
+                name: "IX_Receipt_Date",
+                table: "Receipt",
                 column: "Date");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Suppliers_Name_EIN",
-                table: "Suppliers",
-                columns: new[] { "Name", "EIN" });
+                name: "IX_Supplier_Name_Ein",
+                table: "Supplier",
+                columns: new[] { "Name", "Ein" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ProductsInvoice");
+                name: "ProductInvoice");
 
             migrationBuilder.DropTable(
-                name: "ProductsReceipt");
+                name: "ProductReceipt");
 
             migrationBuilder.DropTable(
-                name: "Receipts");
+                name: "Invoice");
 
             migrationBuilder.DropTable(
-                name: "Invoices");
+                name: "Product");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Receipt");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Supplier");
 
             migrationBuilder.DropTable(
-                name: "Suppliers");
+                name: "Category");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Customer");
 
             migrationBuilder.DropTable(
-                name: "Insurances");
+                name: "Insurance");
         }
     }
 }

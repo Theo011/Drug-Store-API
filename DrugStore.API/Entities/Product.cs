@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DrugStore.API.Entities
 {
     [Index(nameof(Name))]
-    public class Products
+    public class Product
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -27,10 +29,13 @@ namespace DrugStore.API.Entities
         public string? Description { get; private set; }
 
         [ForeignKey("CategoriesId")]
-        public Categories? Categories { get; private set; }
+        public Category? Categories { get; private set; }
         public int CategoriesId { get; private set; }
 
-        public Products(int id, string name, decimal purchasePrice, decimal salePrice, string description, int categoriesId)
+        public ICollection<ProductInvoice> ProductInvoice { get; private set; } = new List<ProductInvoice>();
+        public ICollection<ProductReceipt> ProductReceipt { get; private set; } = new List<ProductReceipt>();
+
+        public Product(int id, string name, decimal purchasePrice, decimal salePrice, string description, int categoriesId)
         {
             Id = id;
             Name = name;

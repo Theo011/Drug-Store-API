@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DrugStore.API.Entities
 {
-    [Index(nameof(Name), nameof(EIN))]
-    public class Suppliers
+    [Index(nameof(Name), nameof(Ein))]
+    public class Supplier
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,17 +30,17 @@ namespace DrugStore.API.Entities
         public string Email { get; private set; }
 
         [Required]
-        public int ZipCode { get; private set; }
+        [MaxLength(5)]
+        public string ZipCode { get; private set; }
 
         [Required]
-        public int EIN { get; private set; }
+        [MaxLength(9)]
+        public string Ein { get; private set; }
 
         [MaxLength(500)]
         public string? Description { get; private set; }
 
-        public Suppliers() { }
-
-        public Suppliers(int id, string name, string address, string phone, string email, int zipCode, int ein, string description)
+        public Supplier(int id, string name, string address, string phone, string email, string zipCode, string ein, string description)
         {
             Id = id;
             Name = name;
@@ -46,7 +48,7 @@ namespace DrugStore.API.Entities
             Phone = phone;
             Email = email;
             ZipCode = zipCode;
-            EIN = ein;
+            Ein = ein;
             Description = description;
         }
     }

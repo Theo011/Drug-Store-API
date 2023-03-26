@@ -15,6 +15,7 @@ Log.Logger = new LoggerConfiguration()
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables();
 builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddControllers(options =>
@@ -79,7 +80,7 @@ builder.Services.AddApiVersioning(setupAction =>
     setupAction.ReportApiVersions = true;
 });
 builder.Services.AddDbContext<DrugStoreDbContext>(DbContextOptions => 
-    DbContextOptions.UseSqlServer(builder.Configuration["ConnectionStrings:DrugStoreDBConnectionString"]));
+    DbContextOptions.UseSqlServer(builder.Configuration["ConnectionStrings:DrugStoreDbConnectionString"]));
 
 var app = builder.Build();
 

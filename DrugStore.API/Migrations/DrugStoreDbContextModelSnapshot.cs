@@ -22,7 +22,7 @@ namespace DrugStore.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("DrugStore.API.Entities.Categories", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace DrugStore.API.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
 
                     b.HasData(
                         new
@@ -54,7 +54,7 @@ namespace DrugStore.API.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.Customers", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,19 +89,23 @@ namespace DrugStore.API.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("SSN")
-                        .HasColumnType("int");
+                    b.Property<string>("Ssn")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InsurancesId");
 
-                    b.HasIndex("Name", "SSN");
+                    b.HasIndex("Name", "Ssn");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customer");
 
                     b.HasData(
                         new
@@ -113,12 +117,12 @@ namespace DrugStore.API.Migrations
                             InsurancesId = 1,
                             Name = "Placeholder Customer Name",
                             Phone = "0000000000",
-                            SSN = 0,
-                            ZipCode = 0
+                            Ssn = "000000000",
+                            ZipCode = "00000"
                         });
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.Insurances", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.Insurance", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -139,7 +143,7 @@ namespace DrugStore.API.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("Insurances");
+                    b.ToTable("Insurance");
 
                     b.HasData(
                         new
@@ -150,7 +154,7 @@ namespace DrugStore.API.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.Invoices", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.Invoice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -174,19 +178,19 @@ namespace DrugStore.API.Migrations
 
                     b.HasIndex("SuppliersId");
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Invoice");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2023, 3, 26, 0, 24, 26, 167, DateTimeKind.Local).AddTicks(716),
-                            Description = "Placeholder Invoices Description",
+                            Date = new DateTime(2023, 3, 26, 14, 22, 34, 585, DateTimeKind.Local).AddTicks(4023),
+                            Description = "Placeholder Invoice Description",
                             SuppliersId = 1
                         });
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.Products", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -218,7 +222,7 @@ namespace DrugStore.API.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
 
                     b.HasData(
                         new
@@ -232,55 +236,73 @@ namespace DrugStore.API.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.ProductsInvoice", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.ProductInvoice", b =>
                 {
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<int>("InvoicesId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasIndex("InvoicesId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.HasIndex("Quantity");
-
-                    b.ToTable("ProductsInvoice");
-                });
-
-            modelBuilder.Entity("DrugStore.API.Entities.ProductsReceipt", b =>
-                {
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReceiptsId")
-                        .HasColumnType("int");
+                    b.HasKey("InvoicesId", "ProductsId");
 
                     b.HasIndex("ProductsId");
 
                     b.HasIndex("Quantity");
 
-                    b.HasIndex("ReceiptsId");
+                    b.ToTable("ProductInvoice");
 
-                    b.ToTable("ProductsReceipt");
+                    b.HasData(
+                        new
+                        {
+                            InvoicesId = 1,
+                            ProductsId = 1,
+                            Description = "Placeholder ProductInvoice Description",
+                            Quantity = 100
+                        });
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.Receipts", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.ProductReceipt", b =>
+                {
+                    b.Property<int>("ReceiptsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReceiptsId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.HasIndex("Quantity");
+
+                    b.ToTable("ProductReceipt");
+
+                    b.HasData(
+                        new
+                        {
+                            ReceiptsId = 1,
+                            ProductsId = 1,
+                            Description = "Placeholder ProductReceipt Description",
+                            Quantity = 100
+                        });
+                });
+
+            modelBuilder.Entity("DrugStore.API.Entities.Receipt", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -304,19 +326,19 @@ namespace DrugStore.API.Migrations
 
                     b.HasIndex("Date");
 
-                    b.ToTable("Receipts");
+                    b.ToTable("Receipt");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
                             CustomersId = 1,
-                            Date = new DateTime(2023, 3, 26, 0, 24, 26, 167, DateTimeKind.Local).AddTicks(776),
-                            Description = "Placeholder Invoices Description"
+                            Date = new DateTime(2023, 3, 26, 14, 22, 34, 585, DateTimeKind.Local).AddTicks(4131),
+                            Description = "Placeholder Receipt Description"
                         });
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.Suppliers", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.Supplier", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -333,8 +355,10 @@ namespace DrugStore.API.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("EIN")
-                        .HasColumnType("int");
+                    b.Property<string>("Ein")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -351,14 +375,16 @@ namespace DrugStore.API.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name", "EIN");
+                    b.HasIndex("Name", "Ein");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Supplier");
 
                     b.HasData(
                         new
@@ -366,17 +392,17 @@ namespace DrugStore.API.Migrations
                             Id = 1,
                             Address = "Placeholder Supplier Address",
                             Description = "Placeholder Supplier Description",
-                            EIN = 0,
+                            Ein = "000000000",
                             Email = "PlaceholderSupplier@Email.com",
                             Name = "Placeholder Supplier Name",
                             Phone = "0000000000",
-                            ZipCode = 0
+                            ZipCode = "00000"
                         });
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.Customers", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.Customer", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Insurances", "Insurances")
+                    b.HasOne("DrugStore.API.Entities.Insurance", "Insurances")
                         .WithMany()
                         .HasForeignKey("InsurancesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -385,9 +411,9 @@ namespace DrugStore.API.Migrations
                     b.Navigation("Insurances");
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.Invoices", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.Invoice", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Suppliers", "Suppliers")
+                    b.HasOne("DrugStore.API.Entities.Supplier", "Suppliers")
                         .WithMany()
                         .HasForeignKey("SuppliersId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -396,9 +422,9 @@ namespace DrugStore.API.Migrations
                     b.Navigation("Suppliers");
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.Products", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.Product", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Categories", "Categories")
+                    b.HasOne("DrugStore.API.Entities.Category", "Categories")
                         .WithMany()
                         .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -407,16 +433,16 @@ namespace DrugStore.API.Migrations
                     b.Navigation("Categories");
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.ProductsInvoice", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.ProductInvoice", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Invoices", "Invoices")
-                        .WithMany()
+                    b.HasOne("DrugStore.API.Entities.Invoice", "Invoices")
+                        .WithMany("ProductInvoice")
                         .HasForeignKey("InvoicesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DrugStore.API.Entities.Products", "Products")
-                        .WithMany()
+                    b.HasOne("DrugStore.API.Entities.Product", "Products")
+                        .WithMany("ProductInvoice")
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -426,16 +452,16 @@ namespace DrugStore.API.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.ProductsReceipt", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.ProductReceipt", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Products", "Products")
-                        .WithMany()
+                    b.HasOne("DrugStore.API.Entities.Product", "Products")
+                        .WithMany("ProductReceipt")
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DrugStore.API.Entities.Invoices", "Receipts")
-                        .WithMany()
+                    b.HasOne("DrugStore.API.Entities.Receipt", "Receipts")
+                        .WithMany("ProductReceipt")
                         .HasForeignKey("ReceiptsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -445,15 +471,32 @@ namespace DrugStore.API.Migrations
                     b.Navigation("Receipts");
                 });
 
-            modelBuilder.Entity("DrugStore.API.Entities.Receipts", b =>
+            modelBuilder.Entity("DrugStore.API.Entities.Receipt", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Customers", "Customers")
+                    b.HasOne("DrugStore.API.Entities.Customer", "Customers")
                         .WithMany()
                         .HasForeignKey("CustomersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Customers");
+                });
+
+            modelBuilder.Entity("DrugStore.API.Entities.Invoice", b =>
+                {
+                    b.Navigation("ProductInvoice");
+                });
+
+            modelBuilder.Entity("DrugStore.API.Entities.Product", b =>
+                {
+                    b.Navigation("ProductInvoice");
+
+                    b.Navigation("ProductReceipt");
+                });
+
+            modelBuilder.Entity("DrugStore.API.Entities.Receipt", b =>
+                {
+                    b.Navigation("ProductReceipt");
                 });
 #pragma warning restore 612, 618
         }

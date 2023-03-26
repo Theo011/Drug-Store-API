@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DrugStore.API.Entities
 {
     [Index(nameof(Date))]
-    public class Receipts
+    public class Invoice
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,16 +20,18 @@ namespace DrugStore.API.Entities
         [MaxLength(500)]
         public string? Description { get; private set; }
 
-        [ForeignKey("CustomersId")]
-        public Customers? Customers { get; private set; }
-        public int CustomersId { get; private set; }
+        [ForeignKey("SuppliersId")]
+        public Supplier? Suppliers { get; private set; }
+        public int SuppliersId { get; private set; }
 
-        public Receipts(int id, DateTime date, string description, int customersId)
+        public ICollection<ProductInvoice> ProductInvoice { get; private set; } = new List<ProductInvoice>();
+
+        public Invoice(int id, DateTime date, string description, int suppliersId)
         {
             Id = id;
             Date = date;
             Description = description;
-            CustomersId = customersId;
+            SuppliersId = suppliersId;
         }
     }
 }
