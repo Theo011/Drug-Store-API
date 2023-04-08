@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,21 +26,21 @@ namespace DrugStore.API.Entities
         [MaxLength(500)]
         public string? Description { get; private set; }
 
-        [ForeignKey("CategoriesId")]
-        public Category? Categories { get; private set; }
-        public int CategoriesId { get; private set; }
+        [ForeignKey("CategoryId")]
+        public Category? Category { get; private set; }
+        public int CategoryId { get; private set; }
 
         public ICollection<ProductInvoice> ProductInvoice { get; private set; } = new List<ProductInvoice>();
         public ICollection<ProductReceipt> ProductReceipt { get; private set; } = new List<ProductReceipt>();
 
-        public Product(int id, string name, decimal purchasePrice, decimal salePrice, string description, int categoriesId)
+        public Product(int id, string name, decimal purchasePrice, decimal salePrice, string description, int categoryId)
         {
             Id = id;
             Name = name;
             PurchasePrice = purchasePrice;
             SalePrice = salePrice;
             Description = description;
-            CategoriesId = categoriesId;
+            CategoryId = categoryId;
         }
     }
 }

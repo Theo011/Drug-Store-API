@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -40,11 +38,11 @@ namespace DrugStore.API.Entities
         [MaxLength(500)]
         public string? Description { get; private set; }
 
-        [ForeignKey("InsurancesId")]
-        public Insurance? Insurances { get; private set; }
-        public int InsurancesId { get; private set; }
+        [ForeignKey("InsuranceId")]
+        public Insurance? Insurance { get; private set; }
+        public int InsuranceId { get; private set; }
 
-        public Customer(int id, string name, string address, string phone, string email, string zipCode, string ssn, string description, int insurancesId)
+        public Customer(int id, string name, string address, string phone, string email, string zipCode, string ssn, string description, int insuranceId)
         {
             Id = id;
             Name = name;
@@ -54,7 +52,7 @@ namespace DrugStore.API.Entities
             ZipCode = zipCode;
             Ssn = ssn;
             Description = description;
-            InsurancesId = insurancesId;
+            InsuranceId = insuranceId;
         }
     }
 }

@@ -66,14 +66,14 @@ namespace DrugStore.API.Migrations
                     PurchasePrice = table.Column<decimal>(type: "money", nullable: false),
                     SalePrice = table.Column<decimal>(type: "money", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    CategoriesId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Product", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_Category_CategoriesId",
-                        column: x => x.CategoriesId,
+                        name: "FK_Product_Category_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -92,14 +92,14 @@ namespace DrugStore.API.Migrations
                     ZipCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     Ssn = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    InsurancesId = table.Column<int>(type: "int", nullable: false)
+                    InsuranceId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customer", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Customer_Insurance_InsurancesId",
-                        column: x => x.InsurancesId,
+                        name: "FK_Customer_Insurance_InsuranceId",
+                        column: x => x.InsuranceId,
                         principalTable: "Insurance",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -113,14 +113,14 @@ namespace DrugStore.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "date", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    SuppliersId = table.Column<int>(type: "int", nullable: false)
+                    SupplierId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Invoice", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Invoice_Supplier_SuppliersId",
-                        column: x => x.SuppliersId,
+                        name: "FK_Invoice_Supplier_SupplierId",
+                        column: x => x.SupplierId,
                         principalTable: "Supplier",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -134,14 +134,14 @@ namespace DrugStore.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "date", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    CustomersId = table.Column<int>(type: "int", nullable: false)
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Receipt", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Receipt_Customer_CustomersId",
-                        column: x => x.CustomersId,
+                        name: "FK_Receipt_Customer_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -151,23 +151,23 @@ namespace DrugStore.API.Migrations
                 name: "ProductInvoice",
                 columns: table => new
                 {
-                    InvoicesId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false),
+                    InvoiceId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductInvoice", x => new { x.InvoicesId, x.ProductsId });
+                    table.PrimaryKey("PK_ProductInvoice", x => new { x.InvoiceId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_ProductInvoice_Invoice_InvoicesId",
-                        column: x => x.InvoicesId,
+                        name: "FK_ProductInvoice_Invoice_InvoiceId",
+                        column: x => x.InvoiceId,
                         principalTable: "Invoice",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductInvoice_Product_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_ProductInvoice_Product_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -177,23 +177,23 @@ namespace DrugStore.API.Migrations
                 name: "ProductReceipt",
                 columns: table => new
                 {
-                    ReceiptsId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false),
+                    ReceiptId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductReceipt", x => new { x.ReceiptsId, x.ProductsId });
+                    table.PrimaryKey("PK_ProductReceipt", x => new { x.ReceiptId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_ProductReceipt_Product_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_ProductReceipt_Product_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductReceipt_Receipt_ReceiptsId",
-                        column: x => x.ReceiptsId,
+                        name: "FK_ProductReceipt_Receipt_ReceiptId",
+                        column: x => x.ReceiptId,
                         principalTable: "Receipt",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -216,32 +216,32 @@ namespace DrugStore.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Customer",
-                columns: new[] { "Id", "Address", "Description", "Email", "InsurancesId", "Name", "Phone", "Ssn", "ZipCode" },
+                columns: new[] { "Id", "Address", "Description", "Email", "InsuranceId", "Name", "Phone", "Ssn", "ZipCode" },
                 values: new object[] { 1, "Placeholder Customer Address", "Placeholder Customer Description", "PlaceholderCustomer@Email.com", 1, "Placeholder Customer Name", "0000000000", "000000000", "00000" });
 
             migrationBuilder.InsertData(
                 table: "Invoice",
-                columns: new[] { "Id", "Date", "Description", "SuppliersId" },
-                values: new object[] { 1, new DateTime(2023, 3, 26, 14, 22, 34, 585, DateTimeKind.Local).AddTicks(4023), "Placeholder Invoice Description", 1 });
+                columns: new[] { "Id", "Date", "Description", "SupplierId" },
+                values: new object[] { 1, new DateTime(2023, 3, 26, 17, 15, 26, 758, DateTimeKind.Local).AddTicks(7678), "Placeholder Invoice Description", 1 });
 
             migrationBuilder.InsertData(
                 table: "Product",
-                columns: new[] { "Id", "CategoriesId", "Description", "Name", "PurchasePrice", "SalePrice" },
+                columns: new[] { "Id", "CategoryId", "Description", "Name", "PurchasePrice", "SalePrice" },
                 values: new object[] { 1, 1, "Placeholder Product Description", "Placeholder Product Name", 10m, 20m });
 
             migrationBuilder.InsertData(
                 table: "ProductInvoice",
-                columns: new[] { "InvoicesId", "ProductsId", "Description", "Quantity" },
+                columns: new[] { "InvoiceId", "ProductId", "Description", "Quantity" },
                 values: new object[] { 1, 1, "Placeholder ProductInvoice Description", 100 });
 
             migrationBuilder.InsertData(
                 table: "Receipt",
-                columns: new[] { "Id", "CustomersId", "Date", "Description" },
-                values: new object[] { 1, 1, new DateTime(2023, 3, 26, 14, 22, 34, 585, DateTimeKind.Local).AddTicks(4131), "Placeholder Receipt Description" });
+                columns: new[] { "Id", "CustomerId", "Date", "Description" },
+                values: new object[] { 1, 1, new DateTime(2023, 3, 26, 17, 15, 26, 758, DateTimeKind.Local).AddTicks(7741), "Placeholder Receipt Description" });
 
             migrationBuilder.InsertData(
                 table: "ProductReceipt",
-                columns: new[] { "ProductsId", "ReceiptsId", "Description", "Quantity" },
+                columns: new[] { "ProductId", "ReceiptId", "Description", "Quantity" },
                 values: new object[] { 1, 1, "Placeholder ProductReceipt Description", 100 });
 
             migrationBuilder.CreateIndex(
@@ -250,9 +250,9 @@ namespace DrugStore.API.Migrations
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customer_InsurancesId",
+                name: "IX_Customer_InsuranceId",
                 table: "Customer",
-                column: "InsurancesId");
+                column: "InsuranceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customer_Name_Ssn",
@@ -270,14 +270,14 @@ namespace DrugStore.API.Migrations
                 column: "Date");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invoice_SuppliersId",
+                name: "IX_Invoice_SupplierId",
                 table: "Invoice",
-                column: "SuppliersId");
+                column: "SupplierId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_CategoriesId",
+                name: "IX_Product_CategoryId",
                 table: "Product",
-                column: "CategoriesId");
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_Name",
@@ -285,9 +285,9 @@ namespace DrugStore.API.Migrations
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductInvoice_ProductsId",
+                name: "IX_ProductInvoice_ProductId",
                 table: "ProductInvoice",
-                column: "ProductsId");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductInvoice_Quantity",
@@ -295,9 +295,9 @@ namespace DrugStore.API.Migrations
                 column: "Quantity");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductReceipt_ProductsId",
+                name: "IX_ProductReceipt_ProductId",
                 table: "ProductReceipt",
-                column: "ProductsId");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductReceipt_Quantity",
@@ -305,9 +305,9 @@ namespace DrugStore.API.Migrations
                 column: "Quantity");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Receipt_CustomersId",
+                name: "IX_Receipt_CustomerId",
                 table: "Receipt",
-                column: "CustomersId");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Receipt_Date",

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DrugStore.API.Migrations
 {
     [DbContext(typeof(DrugStoreDbContext))]
-    [Migration("20230326112235_DrugStoreDbInitialization")]
+    [Migration("20230326141527_DrugStoreDbInitialization")]
     partial class DrugStoreDbInitialization
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,7 +78,7 @@ namespace DrugStore.API.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("InsurancesId")
+                    b.Property<int>("InsuranceId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -103,7 +103,7 @@ namespace DrugStore.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InsurancesId");
+                    b.HasIndex("InsuranceId");
 
                     b.HasIndex("Name", "Ssn");
 
@@ -116,7 +116,7 @@ namespace DrugStore.API.Migrations
                             Address = "Placeholder Customer Address",
                             Description = "Placeholder Customer Description",
                             Email = "PlaceholderCustomer@Email.com",
-                            InsurancesId = 1,
+                            InsuranceId = 1,
                             Name = "Placeholder Customer Name",
                             Phone = "0000000000",
                             Ssn = "000000000",
@@ -171,14 +171,14 @@ namespace DrugStore.API.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("SuppliersId")
+                    b.Property<int>("SupplierId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Date");
 
-                    b.HasIndex("SuppliersId");
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("Invoice");
 
@@ -186,9 +186,9 @@ namespace DrugStore.API.Migrations
                         new
                         {
                             Id = 1,
-                            Date = new DateTime(2023, 3, 26, 14, 22, 34, 585, DateTimeKind.Local).AddTicks(4023),
+                            Date = new DateTime(2023, 3, 26, 17, 15, 26, 758, DateTimeKind.Local).AddTicks(7678),
                             Description = "Placeholder Invoice Description",
-                            SuppliersId = 1
+                            SupplierId = 1
                         });
                 });
 
@@ -200,7 +200,7 @@ namespace DrugStore.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CategoriesId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -220,7 +220,7 @@ namespace DrugStore.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoriesId");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("Name");
 
@@ -230,7 +230,7 @@ namespace DrugStore.API.Migrations
                         new
                         {
                             Id = 1,
-                            CategoriesId = 1,
+                            CategoryId = 1,
                             Description = "Placeholder Product Description",
                             Name = "Placeholder Product Name",
                             PurchasePrice = 10m,
@@ -240,10 +240,10 @@ namespace DrugStore.API.Migrations
 
             modelBuilder.Entity("DrugStore.API.Entities.ProductInvoice", b =>
                 {
-                    b.Property<int>("InvoicesId")
+                    b.Property<int>("InvoiceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductsId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -253,9 +253,9 @@ namespace DrugStore.API.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("InvoicesId", "ProductsId");
+                    b.HasKey("InvoiceId", "ProductId");
 
-                    b.HasIndex("ProductsId");
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("Quantity");
 
@@ -264,8 +264,8 @@ namespace DrugStore.API.Migrations
                     b.HasData(
                         new
                         {
-                            InvoicesId = 1,
-                            ProductsId = 1,
+                            InvoiceId = 1,
+                            ProductId = 1,
                             Description = "Placeholder ProductInvoice Description",
                             Quantity = 100
                         });
@@ -273,10 +273,10 @@ namespace DrugStore.API.Migrations
 
             modelBuilder.Entity("DrugStore.API.Entities.ProductReceipt", b =>
                 {
-                    b.Property<int>("ReceiptsId")
+                    b.Property<int>("ReceiptId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductsId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -286,9 +286,9 @@ namespace DrugStore.API.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("ReceiptsId", "ProductsId");
+                    b.HasKey("ReceiptId", "ProductId");
 
-                    b.HasIndex("ProductsId");
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("Quantity");
 
@@ -297,8 +297,8 @@ namespace DrugStore.API.Migrations
                     b.HasData(
                         new
                         {
-                            ReceiptsId = 1,
-                            ProductsId = 1,
+                            ReceiptId = 1,
+                            ProductId = 1,
                             Description = "Placeholder ProductReceipt Description",
                             Quantity = 100
                         });
@@ -312,7 +312,7 @@ namespace DrugStore.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CustomersId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -324,7 +324,7 @@ namespace DrugStore.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomersId");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("Date");
 
@@ -334,8 +334,8 @@ namespace DrugStore.API.Migrations
                         new
                         {
                             Id = 1,
-                            CustomersId = 1,
-                            Date = new DateTime(2023, 3, 26, 14, 22, 34, 585, DateTimeKind.Local).AddTicks(4131),
+                            CustomerId = 1,
+                            Date = new DateTime(2023, 3, 26, 17, 15, 26, 758, DateTimeKind.Local).AddTicks(7741),
                             Description = "Placeholder Receipt Description"
                         });
                 });
@@ -404,84 +404,84 @@ namespace DrugStore.API.Migrations
 
             modelBuilder.Entity("DrugStore.API.Entities.Customer", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Insurance", "Insurances")
+                    b.HasOne("DrugStore.API.Entities.Insurance", "Insurance")
                         .WithMany()
-                        .HasForeignKey("InsurancesId")
+                        .HasForeignKey("InsuranceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Insurances");
+                    b.Navigation("Insurance");
                 });
 
             modelBuilder.Entity("DrugStore.API.Entities.Invoice", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Supplier", "Suppliers")
+                    b.HasOne("DrugStore.API.Entities.Supplier", "Supplier")
                         .WithMany()
-                        .HasForeignKey("SuppliersId")
+                        .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Suppliers");
+                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("DrugStore.API.Entities.Product", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Category", "Categories")
+                    b.HasOne("DrugStore.API.Entities.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoriesId")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Categories");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("DrugStore.API.Entities.ProductInvoice", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Invoice", "Invoices")
+                    b.HasOne("DrugStore.API.Entities.Invoice", "Invoice")
                         .WithMany("ProductInvoice")
-                        .HasForeignKey("InvoicesId")
+                        .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DrugStore.API.Entities.Product", "Products")
+                    b.HasOne("DrugStore.API.Entities.Product", "Product")
                         .WithMany("ProductInvoice")
-                        .HasForeignKey("ProductsId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Invoices");
+                    b.Navigation("Invoice");
 
-                    b.Navigation("Products");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("DrugStore.API.Entities.ProductReceipt", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Product", "Products")
+                    b.HasOne("DrugStore.API.Entities.Product", "Product")
                         .WithMany("ProductReceipt")
-                        .HasForeignKey("ProductsId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DrugStore.API.Entities.Receipt", "Receipts")
+                    b.HasOne("DrugStore.API.Entities.Receipt", "Receipt")
                         .WithMany("ProductReceipt")
-                        .HasForeignKey("ReceiptsId")
+                        .HasForeignKey("ReceiptId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Products");
+                    b.Navigation("Product");
 
-                    b.Navigation("Receipts");
+                    b.Navigation("Receipt");
                 });
 
             modelBuilder.Entity("DrugStore.API.Entities.Receipt", b =>
                 {
-                    b.HasOne("DrugStore.API.Entities.Customer", "Customers")
+                    b.HasOne("DrugStore.API.Entities.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomersId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customers");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("DrugStore.API.Entities.Invoice", b =>

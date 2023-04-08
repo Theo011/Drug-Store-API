@@ -1,4 +1,5 @@
 using DrugStore.API.DbContexts;
+using DrugStore.API.Services;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -53,6 +54,7 @@ builder.Services.AddSwaggerGen(setupAction =>
 });
 builder.Services.AddSingleton<FileExtensionContentTypeProvider>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddScoped<IDrugStoreRepository, DrugStoreRepository>();
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new()

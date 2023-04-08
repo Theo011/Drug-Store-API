@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>DrugStore.API.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,11 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Databases\DrugStore\Logs\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
-    <Folder Include="Profiles\" />
   </ItemGroup>
 
 </Project>
