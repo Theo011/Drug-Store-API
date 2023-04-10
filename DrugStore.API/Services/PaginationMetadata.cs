@@ -17,7 +17,7 @@
             TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
         }
 
-        public static PaginationMetadata Create<T>(IQueryable<T> source, int currentPage, int pageSize)
+        public static PaginationMetadata Create<T>(IQueryable<T> source, int pageSize, int currentPage)
         {
             var totalCount = source.Count();
 

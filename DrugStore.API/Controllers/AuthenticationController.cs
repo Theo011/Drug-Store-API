@@ -46,7 +46,6 @@ namespace DrugStore.API.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()!),
                 new Claim(ClaimTypes.Name, user.UserName!)
             };
-
             var jwtSecurityToken = new JwtSecurityToken(
                 _configuration["Authentication:Issuer"],
                 _configuration["Authentication:Audience"],

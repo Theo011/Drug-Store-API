@@ -28,8 +28,8 @@ namespace DrugStore.API.Controllers
         {
             var categories = await _repository.GetCategoriesAsync(pageNumber, pageSize);
             var categoryDtos = _mapper.Map<IEnumerable<CategoryDto>>(categories);
-
             var paginationMetadata = PaginationMetadata.Create(categories.AsQueryable(), pageNumber, pageSize);
+
             Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(paginationMetadata));
 
             return Ok(categoryDtos);
@@ -39,12 +39,12 @@ namespace DrugStore.API.Controllers
         public async Task<ActionResult<CategoryDto>> GetCategory(int id)
         {
             var category = await _repository.GetCategoryAsync(id);
+
             if (category == null)
-            {
                 return NotFound();
-            }
 
             var categoryDto = _mapper.Map<CategoryDto>(category);
+
             return Ok(categoryDto);
         }
 
@@ -52,10 +52,12 @@ namespace DrugStore.API.Controllers
         public async Task<ActionResult<CategoryDto>> CreateCategory(CategoryForCreationAndUpdateDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
+
             await _repository.AddCategoryAsync(category);
             await _repository.SaveChangesAsync();
 
             var createdCategoryDto = _mapper.Map<CategoryDto>(category);
+
             return CreatedAtRoute("GetCategory", new { id = createdCategoryDto.Id }, createdCategoryDto);
         }
 
@@ -63,10 +65,9 @@ namespace DrugStore.API.Controllers
         public async Task<IActionResult> UpdateCategory(int id, CategoryForCreationAndUpdateDto categoryDto)
         {
             var category = await _repository.GetCategoryAsync(id);
+
             if (category == null)
-            {
                 return NotFound();
-            }
 
             _mapper.Map(categoryDto, category);
             _repository.UpdateCategory(category);
@@ -79,10 +80,9 @@ namespace DrugStore.API.Controllers
         public async Task<IActionResult> DeleteCategory(int id)
         {
             var category = await _repository.GetCategoryAsync(id);
+
             if (category == null)
-            {
                 return NotFound();
-            }
 
             _repository.DeleteCategory(category);
             await _repository.SaveChangesAsync();
