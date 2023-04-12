@@ -1,3 +1,3 @@
 # Drug Store API
 
-Back-end for [Drug Store APP](https://github.com/Theo011/Drug-Store-APP).
+MVC based API for a Drug Store using MS SQL Server and Entity Framework Core.
