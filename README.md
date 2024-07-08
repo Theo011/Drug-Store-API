@@ -1,3 +1,3 @@
 # Drug Store API
 
-MVC based API for a Drug Store using MS SQL Server and Entity Framework Core.
+This project is a RESTful API built with C# and .NET 6, created as a **self-directed learning exercise** for API development. It follows best practices, SOLID principles, and REST architectural style.
